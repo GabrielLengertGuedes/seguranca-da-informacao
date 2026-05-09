@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sistema de Ocorrências Acadêmicas — versão inicial</title>
+  <title>Sistema de Ocorrências Acadêmicas</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
-    <div>
+    <div class="topbar-brand">
       <p class="eyebrow">Segurança da Informação</p>
       <h1>Sistema de Ocorrências Acadêmicas</h1>
       <p class="subtitle">Protótipo didático em HTML, CSS e JavaScript</p>
@@ -21,13 +21,12 @@
   </header>
 
   <main class="layout">
-        <section id="loginView" class="card login-card">
+
+    <section id="loginView" class="card login-card">
       <div>
         <p class="eyebrow">Acesso</p>
         <h2>Entrar no sistema</h2>
-        <p class="muted-text">
-          Use um dos usuários de demonstração para acessar o painel.
-        </p>
+        <p class="muted-text">Use um dos usuários de demonstração para acessar o painel.</p>
       </div>
 
       <form id="loginForm" class="form-grid">
@@ -47,186 +46,219 @@
       <div class="demo-users">
         <h3>Usuários de demonstração</h3>
         <ul>
-          <li><strong>aluno@faculdade.local</strong> / 123456</li>
-          <li><strong>professor@faculdade.local</strong> / 123456</li>
-          <li><strong>admin@faculdade.local</strong> / admin</li>
+          <li>
+            <strong>aluno@faculdade.local</strong> / 123456
+            <span class="role-tag role-ALUNO">Aluno</span>
+          </li>
+          <li>
+            <strong>professor@faculdade.local</strong> / 123456
+            <span class="role-tag role-PROFESSOR">Professor</span>
+          </li>
+          <li>
+            <strong>admin@faculdade.local</strong> / admin
+            <span class="role-tag role-ADMIN">Administrador</span>
+          </li>
         </ul>
       </div>
     </section>
 
     <section id="appView" class="hidden">
+
       <section class="grid two">
         <article class="card">
           <p class="eyebrow">Usuário atual</p>
           <h2 id="currentUserName">—</h2>
           <p id="currentUserDetails" class="muted-text">—</p>
+          <div id="roleBadgeWrap" style="margin-top:0.75rem;"></div>
 
-          <div class="role-switch">
+          <div id="roleSwitchSection" class="role-switch hidden">
             <label>
-              Perfil ativo
+              Simular perfil ativo
               <select id="roleSelect">
                 <option value="ALUNO">Aluno</option>
                 <option value="PROFESSOR">Professor</option>
                 <option value="ADMIN">Administrador</option>
               </select>
             </label>
+            <p class="muted-text" style="font-size:0.78rem;margin-top:0.3rem;">
+              Permite simular outros perfis para testes. Disponível apenas ao administrador.
+            </p>
           </div>
         </article>
 
         <article class="card">
           <p class="eyebrow">Ações rápidas</p>
           <h2>Ferramentas do painel</h2>
-          <div class="actions">
-            <button id="exportBtn" class="btn secondary" type="button">Exportar todos os dados</button>
-            <button id="clearLogsBtn" class="btn secondary" type="button">Limpar logs</button>
-            <button id="resetBtn" class="btn danger" type="button">Restaurar dados iniciais</button>
-          </div>
+          <div id="quickActions" class="actions"></div>
         </article>
       </section>
 
-      <section class="grid two">
+      <section id="studentView" class="hidden">
         <article class="card">
-          <p class="eyebrow">Nova ocorrência</p>
-          <h2>Registrar ocorrência acadêmica</h2>
-
-          <form id="occurrenceForm" class="form-grid">
-            <label>
-              Nome do aluno
-              <input id="studentName" type="text" placeholder="Ex.: João da Silva" />
-            </label>
-
-            <label>
-              Matrícula
-              <input id="studentId" type="text" placeholder="Ex.: 202400123" />
-            </label>
-
-            <label>
-              CPF
-              <input id="studentCpf" type="text" placeholder="Ex.: 000.000.000-00" />
-            </label>
-
-            <label>
-              E-mail pessoal
-              <input id="studentEmail" type="email" placeholder="aluno@email.com" />
-            </label>
-
-            <label>
-              Telefone
-              <input id="studentPhone" type="text" placeholder="(00) 00000-0000" />
-            </label>
-
-            <label>
-              Tipo de ocorrência
-              <select id="category">
-                <option>Nota</option>
-                <option>Frequência</option>
-                <option>Comportamento</option>
-                <option>Solicitação administrativa</option>
-                <option>Outro</option>
-              </select>
-            </label>
-
-            <label>
-              Prioridade
-              <select id="priority">
-                <option>Baixa</option>
-                <option>Média</option>
-                <option>Alta</option>
-                <option>Crítica</option>
-              </select>
-            </label>
-
-            <label class="span-2">
-              Descrição da ocorrência
-              <textarea id="description" rows="5" placeholder="Descreva o ocorrido..."></textarea>
-            </label>
-
-            <label class="span-2">
-              Observação interna
-              <textarea id="internalNote" rows="3" placeholder="Informação visível no painel..."></textarea>
-            </label>
-
-            <label class="check span-2">
-              <input id="privacyAck" type="checkbox" />
-              Confirmo que posso registrar estes dados.
-            </label>
-
-            <button class="btn primary span-2" type="submit">Salvar ocorrência</button>
-          </form>
-        </article>
-
-        <article class="card">
-          <p class="eyebrow">Busca</p>
-          <h2>Pesquisar registros</h2>
-
-          <label>
-            Termo de busca
-            <input id="search" type="search" placeholder="Nome, matrícula, CPF, e-mail ou texto..." />
-          </label>
-
-          <div class="summary">
+          <div class="section-header">
             <div>
-              <strong id="totalOccurrences">0</strong>
-              <span>ocorrências</span>
+              <p class="eyebrow">Minhas ocorrências</p>
+              <h2>Seus registros acadêmicos</h2>
             </div>
-            <div>
-              <strong id="criticalOccurrences">0</strong>
-              <span>críticas</span>
-            </div>
+            <span class="badge muted">somente leitura</span>
           </div>
-
-          <div class="notice">
-            A busca percorre todos os campos cadastrados e todos os perfis acessam a mesma base.
+          <p class="muted-text" style="margin-bottom:1rem;">
+            Exibindo ocorrências vinculadas à sua matrícula. Dados sensíveis são ocultados.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tipo</th>
+                  <th>Prioridade</th>
+                  <th>Status</th>
+                  <th>Descrição</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody id="studentOccurrencesTable"></tbody>
+            </table>
           </div>
         </article>
       </section>
 
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <p class="eyebrow">Registros</p>
-            <h2>Ocorrências cadastradas</h2>
-          </div>
-          <span id="lastUpdate" class="badge">—</span>
-        </div>
+      <section id="staffView" class="hidden">
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Aluno</th>
-                <th>Documento</th>
-                <th>Contato</th>
-                <th>Tipo</th>
-                <th>Prioridade</th>
-                <th>Status</th>
-                <th>Descrição</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody id="occurrencesTable"></tbody>
-          </table>
-        </div>
+        <section class="grid two">
+          <article class="card">
+            <p class="eyebrow">Nova ocorrência</p>
+            <h2>Registrar ocorrência acadêmica</h2>
+            <p class="muted-text" style="margin-bottom:0.25rem;font-size:0.83rem;">
+              Preencha nome e matrícula para identificar o aluno. Dados pessoais sensíveis (CPF, telefone, e-mail pessoal) não devem ser inseridos neste formulário.
+            </p>
+
+            <form id="occurrenceForm" class="form-grid">
+              <label>
+                Nome do aluno
+                <input id="studentName" type="text" placeholder="Ex.: João da Silva" />
+              </label>
+
+              <label>
+                Matrícula
+                <input id="studentId" type="text" placeholder="Ex.: 202400123" />
+              </label>
+
+              <label>
+                Tipo de ocorrência
+                <select id="category">
+                  <option>Nota</option>
+                  <option>Frequência</option>
+                  <option>Comportamento</option>
+                  <option>Solicitação administrativa</option>
+                  <option>Outro</option>
+                </select>
+              </label>
+
+              <label>
+                Prioridade
+                <select id="priority">
+                  <option>Baixa</option>
+                  <option>Média</option>
+                  <option>Alta</option>
+                  <option>Crítica</option>
+                </select>
+              </label>
+
+              <label class="span-2">
+                Descrição da ocorrência
+                <textarea id="description" rows="4" placeholder="Descreva o ocorrido..."></textarea>
+              </label>
+
+              <label class="span-2">
+                Observação interna
+                <textarea id="internalNote" rows="2" placeholder="Visível apenas no painel interno..."></textarea>
+              </label>
+
+              <button class="btn primary span-2" type="submit">Salvar ocorrência</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <p class="eyebrow">Busca</p>
+            <h2>Pesquisar registros</h2>
+
+            <label>
+              Termo de busca
+              <input id="search" type="search" placeholder="Nome, matrícula ou texto..." />
+            </label>
+
+            <div class="summary">
+              <div>
+                <strong id="totalOccurrences">0</strong>
+                <span>ocorrências</span>
+              </div>
+              <div>
+                <strong id="criticalOccurrences">0</strong>
+                <span>críticas</span>
+              </div>
+            </div>
+
+            <div class="notice">
+              A busca percorre nome, matrícula, tipo e descrição. Observações internas são visíveis apenas ao administrador.
+            </div>
+          </article>
+        </section>
+
+        <section class="card">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Registros</p>
+              <h2>Ocorrências cadastradas</h2>
+            </div>
+            <span id="lastUpdate" class="badge muted">—</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Aluno / Matrícula</th>
+                  <th>Tipo</th>
+                  <th>Prioridade</th>
+                  <th>Status</th>
+                  <th>Descrição</th>
+                  <th>Registrado por</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="occurrencesTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="auditSection" class="card hidden">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Auditoria</p>
+              <h2>Logs do sistema</h2>
+            </div>
+            <span class="badge muted">armazenamento local</span>
+          </div>
+          <div id="auditLog" class="log-list"></div>
+        </section>
+
+        <section id="adminPanel" class="card hidden">
+          <p class="eyebrow">Administração</p>
+          <h2>Gerenciamento de perfis de acesso</h2>
+          <p class="muted-text" style="margin-bottom:0.25rem;font-size:0.83rem;">
+            Somente o administrador pode alterar os perfis dos usuários do sistema.
+          </p>
+          <div id="userManagementList" class="user-list"></div>
+        </section>
+
       </section>
 
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <p class="eyebrow">Auditoria</p>
-            <h2>Logs do sistema</h2>
-          </div>
-          <span class="badge muted">armazenamento local</span>
-        </div>
-
-        <div id="auditLog" class="log-list"></div>
-      </section>
     </section>
   </main>
 
   <footer class="footer">
-    <p>
-      Protótipo estático para atividade prática. Publicável em GitHub Pages.
-    </p>
+    <p>Protótipo estático para atividade prática — Segurança da Informação.</p>
   </footer>
 
   <script src="app.js"></script>
