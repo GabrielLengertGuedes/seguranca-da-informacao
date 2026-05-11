@@ -9,8 +9,6 @@
 
 ---
 
----
----
 
 # Sistema de Ocorrências Acadêmicas — Protótipo Didático
 
