@@ -1,11 +1,15 @@
 ## Identificação
 
- **Disciplina**:  Segurança da Informação 
- **Professor**:  Edson Vaz Lopes 
- **Curso**:  Engenharia de Software — Católica SC 
- **Turma**:  T2ESOFT05NB 
- **Integrantes**:  Anttonio Osório Molinaro Maccagnini · Gabriel Lengert Guedes 
- **Sistema publicado**:  [gabriellengertguedes.github.io/seguranca-da-informacao](https://gabriellengertguedes.github.io/seguranca-da-informacao) 
+| | |
+|---|---|
+| **Disciplina** | Segurança da Informação |
+| **Professor** | Edson Vaz Lopes |
+| **Curso** | Engenharia de Software — Católica SC |
+| **Turma** | T2ESOFT05NB |
+| **Integrantes** | Anttonio Osório Molinaro Maccagnini · Gabriel Lengert Guedes |
+| **Sistema publicado** | [gabriellengertguedes.github.io/seguranca-da-informacao](https://gabriellengertguedes.github.io/seguranca-da-informacao) |
+
+---
 
 # Sistema de Ocorrências Acadêmicas — Protótipo Didático
 
