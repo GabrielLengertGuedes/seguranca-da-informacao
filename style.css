@@ -107,7 +107,8 @@ body {
 }
 
 .login-card {
-  max-width: 480px;
+  width: 100%;
+  max-width: 680px;
   margin: auto;
 }
 
