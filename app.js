@@ -594,3 +594,4 @@ window.changeStatus = changeStatus;
 window.changeUserRole = changeUserRole;
 
 boot();
+
